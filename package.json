@@ -1,6 +1,10 @@
 {
   
   "type": "module",
+  "scripts": {
+    "build":"react-scripts build",
+    "start":"node src/index.js"
+  },
   "dependencies": {
     "@prisma/client": "^5.20.0",
     "express": "^4.21.0"
