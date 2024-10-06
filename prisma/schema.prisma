@@ -1,0 +1,48 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Doctor {
+  id          Int          @id @default(autoincrement())
+  name        String
+  specialty   String
+  image       String       @db.Text // or @db.VarChar(1000) for a specific size
+  rating      Float
+  experience  Int
+  patients    Int
+  location    String
+  education   String
+  bio         String
+  contactId   Int          @unique
+  contact     Contact      @relation(fields: [contactId], references: [id])
+  availability Availability[]
+  awards      Award[]
+}
+
+
+model Availability {
+  id      Int     @id @default(autoincrement())
+  day     String
+  doctor  Doctor  @relation(fields: [doctorId], references: [id])
+  doctorId Int
+}
+
+model Award {
+  id      Int     @id @default(autoincrement())
+  title   String
+  doctor  Doctor  @relation(fields: [doctorId], references: [id])
+  doctorId Int
+}
+
+model Contact {
+  id      Int     @id @default(autoincrement())
+  phone   String
+  email   String
+  website String?
+  doctor  Doctor? @relation
+}
