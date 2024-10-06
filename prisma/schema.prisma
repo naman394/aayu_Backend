@@ -46,3 +46,21 @@ model Contact {
   website String?
   doctor  Doctor? @relation
 }
+
+model User {
+  id              Int             @id @default(autoincrement())
+  name            String
+  email           String          @unique
+  medicalHistories MedicalHistory[]
+}
+
+model MedicalHistory {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  diagnosis  String
+  treatment  String
+  date       DateTime
+  doctor     String
+  
+  user       User     @relation(fields: [userId], references: [id])
+}
