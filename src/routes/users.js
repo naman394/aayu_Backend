@@ -20,6 +20,20 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Route to get all users
+router.get('/', async (req, res) => {
+  try {
+    const users = await prisma.user.findMany();
+    res.json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error.message || error);
+    res.status(500).json({ error: 'Failed to fetch users' });
+  } finally {
+    await prisma.$disconnect();
+  }
+});
+
+
 
 
 
