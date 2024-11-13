@@ -1,4 +1,9 @@
+
+
+
 Aayu Backend Project
+
+
 This is the backend API for the Aayu platform, built with Node.js, Express, Prisma ORM, and PostgreSQL. The backend serves as the foundation for managing users, medical histories, hospitals, and doctors.
 
 Features
