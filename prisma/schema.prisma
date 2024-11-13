@@ -1,5 +1,5 @@
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -7,60 +7,19 @@ generator client {
   provider = "prisma-client-js"
 }
 
+
 model Doctor {
-  id          Int          @id @default(autoincrement())
-  name        String
-  specialty   String
-  image       String       @db.Text // or @db.VarChar(1000) for a specific size
-  rating      Float
-  experience  Int
-  patients    Int
-  location    String
-  education   String
-  bio         String
-  contactId   Int          @unique
-  contact     Contact      @relation(fields: [contactId], references: [id])
-  availability Availability[]
-  awards      Award[]
+  id        Int     @id @default(autoincrement())
+  name      String
+  specialty String
+  rating    Float
 }
 
 
-model Availability {
-  id      Int     @id @default(autoincrement())
-  day     String
-  doctor  Doctor  @relation(fields: [doctorId], references: [id])
-  doctorId Int
-}
-
-model Award {
-  id      Int     @id @default(autoincrement())
-  title   String
-  doctor  Doctor  @relation(fields: [doctorId], references: [id])
-  doctorId Int
-}
-
-model Contact {
-  id      Int     @id @default(autoincrement())
-  phone   String
-  email   String
-  website String?
-  doctor  Doctor? @relation
-}
-
-model User {
-  id              Int             @id @default(autoincrement())
-  name            String
-  email           String          @unique
-  medicalHistories MedicalHistory[]
-}
-
-model MedicalHistory {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  diagnosis  String
-  treatment  String
-  date       DateTime
-  doctor     String
-  
-  user       User     @relation(fields: [userId], references: [id])
+model user {
+  id        String   @id @default(uuid()) // Keep the UUID type for 'user'
+  name      String
+  email     String   @unique
+  password  String
+  // Removed medicalHistories relation from here
 }
